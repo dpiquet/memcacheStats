@@ -1,0 +1,11 @@
+{
+  "name": "memcachestats",
+  "version": "0.0.1",
+  "dependencies": {
+    "memcached": "2.2.2",
+    "http": "0.0.0",
+    "sqlite3": "3.1.13",
+    "express": "4.16.2",
+    "pug": "2.0.0-rc.4"
+  }
+}
