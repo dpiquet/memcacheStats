@@ -4,7 +4,8 @@
  *
  */
 
-const http = require('http');
+'use strict';
+
 const Memcached = require('memcached');
 const Sqlite3 = require('sqlite3');
 const Express = require('express');
@@ -13,8 +14,10 @@ var app = Express();
 app.set('view engine', 'pug');
 app.use(Express.static('assets'));
 
-var memcached = new Memcached('127.0.0.1:11211');
-var db = new Sqlite3.Database('data.sqlite3');
+var config = require('./config');
+
+var memcached = new Memcached(config.memcache.host+':'+config.memcache.port);
+var db = new Sqlite3.Database(config.database.filename+'.sqlite3');
 
 db.serialize(function () {
 
@@ -157,7 +160,7 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
-app.listen(8081);
+app.listen(config.listenPort);
 
 /**
  * Save items stats
