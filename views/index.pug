@@ -1,13 +1,92 @@
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../../../favicon.ico">
 
-head
-    <script type="text/javascript" src="js/lib/Chart.min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/charts.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/app.css">
+        <title>MemcacheStats</title>
 
-body
+        <!-- Bootstrap core CSS -->
+        <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <h1>Memcached Stats Interface</h1>
+        <!-- Application JS -->
+        <script type="text/javascript" src="lib/chart.js/Chart.js"></script>
+        <script type="text/javascript" src="lib/vue/vue.js"></script>
+        <script type="text/javascript" src="lib/axios/axios.js"></script>
+        <script type="text/javascript" src="lib/vuechart/VueChart.js"></script>
+        <script type="text/javascript" src="js/vue-app.js"></script>
 
-    </html>
+    </head>
+
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">Memcache<b>Stats</b></a>
+            </nav>
+
+            <main role="main" class="container">
+                <div class="starter-template">
+                    <h1>Dashboard</h1>
+                </div>
+
+                <div class="graphes">
+                    <div class="container">
+                        <div class="row">
+
+                            <input v-model=message type="hidden">
+
+                            <div class="col-md-4">
+                             | <vue-chart
+                             |    type="line"
+                             |    :data="instantHits"
+                             |    :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                             |    :update-config="{duration: 800, easing: 'easeOutBounce'}"
+                             | ></vue-chart>
+                            </div>
+
+                            <div class="col-md-4">
+                             | <vue-chart
+                             |    type="line"
+                             |    :data="instantMisses"
+                             |    :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                             |    :update-config="{duration: 800, easing: 'easeOutBounce'}"
+                             | ></vue-chart>
+                            </div>
+
+                            <div class="col-md-4">
+                             | <vue-chart
+                             |    type="line"
+                             |    :data="hitsVsMiss"
+                             |    :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                             |    :update-config="{duration: 800, easing: 'easeOutBounce'}"
+                             | ></vue-chart>
+                            </div>
+
+                            <div class="col-md-4">
+                             | <vue-chart
+                             |    type="line"
+                             |    :data="inVsOut"
+                             |    :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                             |    :update-config="{duration: 800, easing: 'easeOutBounce'}"
+                             | ></vue-chart>
+                            </div>
+
+                            <div class="col-md-4">
+                             | <vue-chart
+                             |    type="line"
+                             |    :data="getVsSet"
+                             |    :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                             |    :update-config="{duration: 800, easing: 'easeOutBounce'}"
+                             | ></vue-chart>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

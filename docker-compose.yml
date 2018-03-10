@@ -1,0 +1,12 @@
+
+version: '3.0'
+
+services:
+    engine:
+        build:
+            context: .
+        volumes:
+            - .:/usr/src/app:rw
+        command: tail -F Dockerfile
+        ports:
+            - 8080:8080

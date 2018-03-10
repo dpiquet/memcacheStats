@@ -12,7 +12,15 @@ const Express = require('express');
 
 var app = Express();
 app.set('view engine', 'pug');
+app.set("views", "./views");
+
 app.use(Express.static('assets'));
+app.use('/lib/vue', Express.static( './node_modules/vue/dist/'));
+app.use('/lib/vue-chartjs', Express.static( './node_modules/vue-chartjs/dist/'));
+app.use('/lib/bootstrap', Express.static( './node_modules/bootstrap/dist/'));
+app.use('/lib/axios', Express.static( './node_modules/axios/dist/'));
+app.use('/lib/chart.js', Express.static( './node_modules/chart.js/dist/'));
+app.use('/lib/vuechart', Express.static( './node_modules/vuechart/'));
 
 var config = require('./config');
 
