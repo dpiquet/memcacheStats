@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>MemcacheStats</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
+    <!-- Application JS -->
+    <script type="text/javascript" src="lib/chart.js/Chart.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/axios/axios.js"></script>
+    <script type="text/javascript" src="lib/vuechart/VueChart.js"></script>
+    <script type="text/javascript" src="js/vue-app.js"></script>
+
+</head>
+
+<body>
+
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header">
+                            default header
+                        </slot>
+                    </div>
+
+                    <div class="modal-body">
+                        <slot name="body">
+                            default body
+                        </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                        <slot name="footer">
+                            <button class="modal-default-button btn" @click="$emit('close')">
+                                Close
+                            </button>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</script>
+
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"><i>Memcache</i><b>Stats</b></a>
+
+        <button v-on:click="flushMemcached" class="btn btn-outline-warning btn-right">Flush Memcached</button>
+    </nav>
+
+    <modal v-if="showModal" @close="showModal = false">
+        <h3 slot="header">Memcached flushed</h3>
+        <div slot="body">Memcached flush command sent</div>
+    </modal>
+
+    <main role="main" class="container">
+        <div class="starter-template">
+            <h1>Dashboard</h1>
+        </div>
+
+
+        <div class="graphes">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="instantHits"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="instantMisses"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="instantGetflushed"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="instantGetexpired"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="instantBytesRead"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="instantBytesWritten"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="hitsVsMiss"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="inVsOut"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="getVsSet"
+                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                        ></vue-chart>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
