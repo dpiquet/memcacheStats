@@ -24,6 +24,15 @@ app.use('/lib/vuechart', Express.static( './node_modules/vuechart/'));
 
 var config = require('./config');
 
+// Use env settings instead of file if available
+if (process.env.MEMCACHESTATS_HOST != undefined) {
+    config.memcache.host = process.env.MEMCACHESTATS_HOST;
+}
+
+if (process.env.MEMCACHESTATS_PORT != undefined) {
+    config.memcache.port = process.env.MEMCACHESTATS_PORT;
+}
+
 var memcached = new Memcached(config.memcache.host+':'+config.memcache.port);
 var db = new Sqlite3.Database(config.database.filename+'.sqlite3');
 

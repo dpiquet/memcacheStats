@@ -67,11 +67,10 @@
     </modal>
 
     <main role="main" class="container">
-        <div class="starter-template">
-            <h1>Dashboard</h1>
-        </div>
 
+        <br />
 
+        <h4>Commands</h4>
         <div class="graphes">
             <div class="container">
                 <div class="row">
@@ -114,7 +113,7 @@
                     <div class="col-md-4">
                         <vue-chart
                                 type="line"
-                                :data="instantBytesRead"
+                                :data="instantTouchHits"
                                 :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
                                 :update-config="{duration: 100, easing: 'easeOutBounce'}"
                         ></vue-chart>
@@ -123,39 +122,35 @@
                     <div class="col-md-4">
                         <vue-chart
                                 type="line"
-                                :data="instantBytesWritten"
+                                :data="instantTouchMisses"
                                 :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
                                 :update-config="{duration: 100, easing: 'easeOutBounce'}"
                         ></vue-chart>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="hitsVsMiss"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
-                        ></vue-chart>
-                    </div>
+        <h4>Network</h4>
 
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="inVsOut"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
-                        ></vue-chart>
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <vue-chart
+                            type="line"
+                            :data="instantBytesRead"
+                            :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                            :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                    ></vue-chart>
+                </div>
 
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="getVsSet"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
-                        ></vue-chart>
-                    </div>
-
+                <div class="col-md-4">
+                    <vue-chart
+                            type="line"
+                            :data="instantBytesWritten"
+                            :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
+                            :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                    ></vue-chart>
                 </div>
             </div>
         </div>

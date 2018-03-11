@@ -143,13 +143,12 @@ window.addEventListener('load', function() {
         data: {
             showModal: false,
             flushMemcached: flushMemcached,
-            hitsVsMiss: getEmptyDataset('Global % Get Hits'),
-            inVsOut: getEmptyDataset('Global % Bytes Read'),
-            getVsSet: getEmptyDataset('Global % get/set'),
             instantHits: getEmptyDataset('Instant Get Hits'),
             instantMisses: getEmptyDataset('Instant Get Misses'),
             instantGetflushed: getEmptyDataset('Instant Get Flushed'),
             instantGetexpired: getEmptyDataset('Instant Get Expired'),
+            instantTouchHits: getEmptyDataset('Instant Touch Hits'),
+            instantTouchMisses: getEmptyDataset('Instant Touch Misses'),
             instantBytesRead: getEmptyDataset('Instant Bytes Read'),
             instantBytesWritten: getEmptyDataset('Instant Bytes Written')
         },
@@ -157,17 +156,6 @@ window.addEventListener('load', function() {
             var root = this;
             var refresh = function() {
                 axios.get('/stats').then(function (response) {
-                    var hitsVsMiss = globalOutOf(response.data, 'get_hits', ['get_misses', 'get_expired', 'get_flushed']);
-                    root.hitsVsMiss.datasets[0].data = hitsVsMiss;
-                    root.hitsVsMiss.labels = hitsVsMiss;
-
-                    var inVsOut = globalOutOf(response.data, 'bytes_read', ['bytes_written']);
-                    root.inVsOut.datasets[0].data = inVsOut;
-                    root.inVsOut.labels = inVsOut;
-
-                    var getVsSet = globalOutOf(response.data, 'cmd_get', ['cmd_set']);
-                    root.getVsSet.datasets[0].data = getVsSet;
-                    root.getVsSet.labels = getVsSet;
 
                     var instantHits = instantValues(response.data, 'get_hits');
                     root.instantHits.datasets[0].data = instantHits;
@@ -189,9 +177,17 @@ window.addEventListener('load', function() {
                     root.instantBytesWritten.datasets[0].data = chartdata;
                     root.instantBytesWritten.labels = chartdata;
 
-                    chartdata = instantKbValues(response.data, 'get_expired');
+                    chartdata = instantValues(response.data, 'get_expired');
                     root.instantGetexpired.datasets[0].data = chartdata;
                     root.instantGetexpired.labels = chartdata;
+
+                    chartdata = instantValues(response.data, 'touch_hits');
+                    root.instantTouchHits.datasets[0].data = chartdata;
+                    root.instantTouchHits.labels = chartdata;
+
+                    chartdata = instantValues(response.data, 'touch_misses');
+                    root.instantTouchMisses.datasets[0].data = chartdata;
+                    root.instantTouchMisses.labels = chartdata;
                 });
             };
             setInterval(refresh, 3000);
