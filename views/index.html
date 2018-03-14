@@ -70,8 +70,6 @@
 
         <br />
 
-        {{ chartType}}
-
         <h4>Commands</h4>
         <div class="graphes">
             <div class="container">
@@ -130,6 +128,24 @@
                         <vue-chart
                                 type="line"
                                 :data="chartData.instantTouchMisses"
+                                :options="chartOptions"
+                                :update-config="chartUpdateConfig"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="chartData.instantDeleteHits"
+                                :options="chartOptions"
+                                :update-config="chartUpdateConfig"
+                        ></vue-chart>
+                    </div>
+
+                    <div class="col-md-4">
+                        <vue-chart
+                                type="line"
+                                :data="chartData.instantDeleteMisses"
                                 :options="chartOptions"
                                 :update-config="chartUpdateConfig"
                         ></vue-chart>

@@ -177,6 +177,8 @@ window.addEventListener('load', function() {
                 instantEvictions: getEmptyDataset('Instant Evictions'),
                 instantUnfetchedEvicted: getEmptyDataset('Instant Unfetch Evictions'),
                 instantTouchMisses: getEmptyDataset('Instant Touch Misses'),
+                instantDeleteHits: getEmptyDataset('Instant Delete Hits'),
+                instantDeleteMisses: getEmptyDataset('Instant Delete Misses'),
                 instantBytesRead: getEmptyDataset('Instant Bytes Read'),
                 instantBytesWritten: getEmptyDataset('Instant Bytes Written')
             }
@@ -217,6 +219,14 @@ window.addEventListener('load', function() {
                     chartdata = instantValues(response.data, 'touch_misses');
                     root.chartData.instantTouchMisses.datasets[0].data = chartdata;
                     root.chartData.instantTouchMisses.labels = chartdata;
+
+                    chartdata = instantValues(response.data, 'delete_hits');
+                    root.chartData.instantDeleteHits.datasets[0].data = chartdata;
+                    root.chartData.instantDeleteHits.labels = chartdata;
+
+                    chartdata = instantValues(response.data, 'delete_misses');
+                    root.chartData.instantDeleteMisses.datasets[0].data = chartdata;
+                    root.chartData.instantDeleteMisses.labels = chartdata;
 
                     chartdata = instantValues(response.data, 'evicted_unfetched');
                     root.chartData.instantUnfetchedEvicted.datasets[0].data = chartdata;
