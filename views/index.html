@@ -70,132 +70,23 @@
 
         <br />
 
-        <h4>Commands</h4>
-        <div class="graphes">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card-graph">
-                            <vue-chart
-                                    :type="chartType"
-                                    :data="chartData.instantHits"
-                                    :options="chartOptions"
-                                    :update-config="chartUpdateConfig"
-                            ></vue-chart>
-                        </div>
-                        <div class="card-body">
-                            <h6>Total hits: N/C</h6>
-                        </div>
-                    </div>
+        <div v-for="chartGroup in chartDataGroups">
+            <h4>{{ chartGroup.groupName }}</h4>
 
-                    <div class="col-md-4">
+            <div class="row">
+
+                <div class="col-md-4 graph-card" v-for="data in chartGroup.data">
+                    <div class="graph">
                         <vue-chart
                                 :type="chartType"
-                                :data="chartData.instantMisses"
+                                :data="data.dataset"
                                 :options="chartOptions"
                                 :update-config="chartUpdateConfig"
                         ></vue-chart>
                     </div>
-
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="chartData.instantGetflushed"
-                                :options="chartOptions"
-                                :update-config="chartUpdateConfig"
-                        ></vue-chart>
+                    <div class="card-body" :title="data.tooltip">
+                        <h6>Total {{ data.memcache_item }}: {{data.total}}</h6>
                     </div>
-
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="chartData.instantGetexpired"
-                                :options="chartOptions"
-                                :update-config="chartUpdateConfig"
-                        ></vue-chart>
-                    </div>
-
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="chartData.instantTouchHits"
-                                :options="chartOptions"
-                                :update-config="chartUpdateConfig"
-                        ></vue-chart>
-                    </div>
-
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="chartData.instantTouchMisses"
-                                :options="chartOptions"
-                                :update-config="chartUpdateConfig"
-                        ></vue-chart>
-                    </div>
-
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="chartData.instantDeleteHits"
-                                :options="chartOptions"
-                                :update-config="chartUpdateConfig"
-                        ></vue-chart>
-                    </div>
-
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="chartData.instantDeleteMisses"
-                                :options="chartOptions"
-                                :update-config="chartUpdateConfig"
-                        ></vue-chart>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h4>System</h4>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <vue-chart
-                            type="line"
-                            :data="chartData.instantEvictions"
-                            :options="chartOptions"
-                            :update-config="chartUpdateConfig"
-                    ></vue-chart>
-                </div>
-                <div class="col-md-4">
-                    <vue-chart
-                            type="line"
-                            :data="chartData.instantUnfetchedEvicted"
-                            :options="chartOptions"
-                            :update-config="chartUpdateConfig"
-                    ></vue-chart>
-                </div>
-            </div>
-        </div>
-
-        <h4>Network</h4>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <vue-chart
-                            type="line"
-                            :data="chartData.instantBytesRead"
-                            :options="chartOptions"
-                            :update-config="chartUpdateConfig"
-                    ></vue-chart>
-                </div>
-
-                <div class="col-md-4">
-                    <vue-chart
-                            type="line"
-                            :data="chartData.instantBytesWritten"
-                            :options="chartOptions"
-                            :update-config="chartUpdateConfig"
-                    ></vue-chart>
                 </div>
             </div>
         </div>
