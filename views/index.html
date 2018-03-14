@@ -70,63 +70,92 @@
 
         <br />
 
+        {{ chartType}}
+
         <h4>Commands</h4>
         <div class="graphes">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
+                        <div class="card-graph">
+                            <vue-chart
+                                    :type="chartType"
+                                    :data="chartData.instantHits"
+                                    :options="chartOptions"
+                                    :update-config="chartUpdateConfig"
+                            ></vue-chart>
+                        </div>
+                        <div class="card-body">
+                            <h6>Total hits: N/C</h6>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
                         <vue-chart
-                                type="line"
-                                :data="instantHits"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                                :type="chartType"
+                                :data="chartData.instantMisses"
+                                :options="chartOptions"
+                                :update-config="chartUpdateConfig"
                         ></vue-chart>
                     </div>
 
                     <div class="col-md-4">
                         <vue-chart
                                 type="line"
-                                :data="instantMisses"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                                :data="chartData.instantGetflushed"
+                                :options="chartOptions"
+                                :update-config="chartUpdateConfig"
                         ></vue-chart>
                     </div>
 
                     <div class="col-md-4">
                         <vue-chart
                                 type="line"
-                                :data="instantGetflushed"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                                :data="chartData.instantGetexpired"
+                                :options="chartOptions"
+                                :update-config="chartUpdateConfig"
                         ></vue-chart>
                     </div>
 
                     <div class="col-md-4">
                         <vue-chart
                                 type="line"
-                                :data="instantGetexpired"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                                :data="chartData.instantTouchHits"
+                                :options="chartOptions"
+                                :update-config="chartUpdateConfig"
                         ></vue-chart>
                     </div>
 
                     <div class="col-md-4">
                         <vue-chart
                                 type="line"
-                                :data="instantTouchHits"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                                :data="chartData.instantTouchMisses"
+                                :options="chartOptions"
+                                :update-config="chartUpdateConfig"
                         ></vue-chart>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="col-md-4">
-                        <vue-chart
-                                type="line"
-                                :data="instantTouchMisses"
-                                :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                                :update-config="{duration: 100, easing: 'easeOutBounce'}"
-                        ></vue-chart>
-                    </div>
+        <h4>System</h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <vue-chart
+                            type="line"
+                            :data="chartData.instantEvictions"
+                            :options="chartOptions"
+                            :update-config="chartUpdateConfig"
+                    ></vue-chart>
+                </div>
+                <div class="col-md-4">
+                    <vue-chart
+                            type="line"
+                            :data="chartData.instantUnfetchedEvicted"
+                            :options="chartOptions"
+                            :update-config="chartUpdateConfig"
+                    ></vue-chart>
                 </div>
             </div>
         </div>
@@ -138,18 +167,18 @@
                 <div class="col-md-4">
                     <vue-chart
                             type="line"
-                            :data="instantBytesRead"
-                            :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                            :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                            :data="chartData.instantBytesRead"
+                            :options="chartOptions"
+                            :update-config="chartUpdateConfig"
                     ></vue-chart>
                 </div>
 
                 <div class="col-md-4">
                     <vue-chart
                             type="line"
-                            :data="instantBytesWritten"
-                            :options="{scales: {yAxes: [{ticks: {beginAtZero: true}}]}}"
-                            :update-config="{duration: 100, easing: 'easeOutBounce'}"
+                            :data="chartData.instantBytesWritten"
+                            :options="chartOptions"
+                            :update-config="chartUpdateConfig"
                     ></vue-chart>
                 </div>
             </div>

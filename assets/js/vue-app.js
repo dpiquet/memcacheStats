@@ -91,6 +91,17 @@ function instantValues(sourceData, index)
 }
 
 /**
+ * Get last value
+ * @param sourceData
+ * @param index
+ * @returns {*}
+ */
+function getLastValue(sourceData, index)
+{
+    return sourceData[sourceData.length - 1][index];
+}
+
+/**
  * Get instant values as Kilobytes
  * @param sourceData
  * @param index
@@ -141,16 +152,34 @@ window.addEventListener('load', function() {
     app = new Vue({
         el: '#app',
         data: {
+            chartType: 'line',
+            chartOptions: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {beginAtZero: true}
+                        }
+                    ]
+                }
+            },
+            chartUpdateConfig: {
+                duration: 0,
+                easing: 'easeOutBounce'
+            },
             showModal: false,
             flushMemcached: flushMemcached,
-            instantHits: getEmptyDataset('Instant Get Hits'),
-            instantMisses: getEmptyDataset('Instant Get Misses'),
-            instantGetflushed: getEmptyDataset('Instant Get Flushed'),
-            instantGetexpired: getEmptyDataset('Instant Get Expired'),
-            instantTouchHits: getEmptyDataset('Instant Touch Hits'),
-            instantTouchMisses: getEmptyDataset('Instant Touch Misses'),
-            instantBytesRead: getEmptyDataset('Instant Bytes Read'),
-            instantBytesWritten: getEmptyDataset('Instant Bytes Written')
+            chartData: {
+                instantHits: getEmptyDataset('Instant Get Hits'),
+                instantMisses: getEmptyDataset('Instant Get Misses'),
+                instantGetflushed: getEmptyDataset('Instant Get Flushed'),
+                instantGetexpired: getEmptyDataset('Instant Get Expired'),
+                instantTouchHits: getEmptyDataset('Instant Touch Hits'),
+                instantEvictions: getEmptyDataset('Instant Evictions'),
+                instantUnfetchedEvicted: getEmptyDataset('Instant Unfetch Evictions'),
+                instantTouchMisses: getEmptyDataset('Instant Touch Misses'),
+                instantBytesRead: getEmptyDataset('Instant Bytes Read'),
+                instantBytesWritten: getEmptyDataset('Instant Bytes Written')
+            }
         },
         mounted() {
             var root = this;
@@ -158,36 +187,44 @@ window.addEventListener('load', function() {
                 axios.get('/stats').then(function (response) {
 
                     var instantHits = instantValues(response.data, 'get_hits');
-                    root.instantHits.datasets[0].data = instantHits;
-                    root.instantHits.labels = instantHits;
+                    root.chartData.instantHits.datasets[0].data = instantHits;
+                    root.chartData.instantHits.labels = instantHits;
 
                     var instantMisses = instantValues(response.data, 'get_misses');
-                    root.instantMisses.datasets[0].data = instantMisses;
-                    root.instantMisses.labels = instantMisses;
+                    root.chartData.instantMisses.datasets[0].data = instantMisses;
+                    root.chartData.instantMisses.labels = instantMisses;
 
                     var chartdata = instantValues(response.data, 'get_flushed');
-                    root.instantGetflushed.datasets[0].data = chartdata;
-                    root.instantGetflushed.labels = chartdata;
+                    root.chartData.instantGetflushed.datasets[0].data = chartdata;
+                    root.chartData.instantGetflushed.labels = chartdata;
 
                     chartdata = instantKbValues(response.data, 'bytes_read');
-                    root.instantBytesRead.datasets[0].data = chartdata;
-                    root.instantBytesRead.labels = chartdata;
+                    root.chartData.instantBytesRead.datasets[0].data = chartdata;
+                    root.chartData.instantBytesRead.labels = chartdata;
 
                     chartdata = instantKbValues(response.data, 'bytes_written');
-                    root.instantBytesWritten.datasets[0].data = chartdata;
-                    root.instantBytesWritten.labels = chartdata;
+                    root.chartData.instantBytesWritten.datasets[0].data = chartdata;
+                    root.chartData.instantBytesWritten.labels = chartdata;
 
                     chartdata = instantValues(response.data, 'get_expired');
-                    root.instantGetexpired.datasets[0].data = chartdata;
-                    root.instantGetexpired.labels = chartdata;
+                    root.chartData.instantGetexpired.datasets[0].data = chartdata;
+                    root.chartData.instantGetexpired.labels = chartdata;
 
                     chartdata = instantValues(response.data, 'touch_hits');
-                    root.instantTouchHits.datasets[0].data = chartdata;
-                    root.instantTouchHits.labels = chartdata;
+                    root.chartData.instantTouchHits.datasets[0].data = chartdata;
+                    root.chartData.instantTouchHits.labels = chartdata;
 
                     chartdata = instantValues(response.data, 'touch_misses');
-                    root.instantTouchMisses.datasets[0].data = chartdata;
-                    root.instantTouchMisses.labels = chartdata;
+                    root.chartData.instantTouchMisses.datasets[0].data = chartdata;
+                    root.chartData.instantTouchMisses.labels = chartdata;
+
+                    chartdata = instantValues(response.data, 'evicted_unfetched');
+                    root.chartData.instantUnfetchedEvicted.datasets[0].data = chartdata;
+                    root.chartData.instantUnfetchedEvicted.labels = chartdata;
+
+                    chartdata = instantValues(response.data, 'evictions');
+                    root.chartData.instantEvictions.datasets[0].data = chartdata;
+                    root.chartData.instantEvictions.labels = chartdata;
                 });
             };
             setInterval(refresh, 3000);
